@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "333695591393",
+    "project_id": "template-app-91bde",
+    "storage_bucket": "template-app-91bde.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:333695591393:android:6c2ac5da3d051d8ab268a0",
+        "android_client_info": {
+          "package_name": "com.mohammed.ex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "333695591393-8j1gi5fnuvievp6vfsme9630i7vu1sa8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAick06PD9T-7IT59VjYzPCK3cwUBrYuEE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "333695591393-8j1gi5fnuvievp6vfsme9630i7vu1sa8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
