@@ -1,9 +1,8 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:template_flutter_project/core/services/remoteconfig_servoce.dart';
 import 'package:template_flutter_project/future/home/domin/home_repo.dart';
-import 'package:template_flutter_project/future/home/models/general_response.dart';
+import 'package:template_flutter_project/future/home/models/user_model.dart';
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
@@ -15,17 +14,17 @@ class HomeCubit extends Cubit<HomeState> {
     return BlocProvider.of(context);
   }
 
-  GeneralResponse<String>? trems;
+  List<UserModel> users = [];
 
-  Future getTermsOfUse() async {
+  Future showUsers() async {
     emit(LoadingData());
-    (await repo.termsOfUse()).fold(
+    (await repo.getUsers()).fold(
       (l) {
         emit(FailureData(l));
       },
       (r) {
-        trems = r;
-        emit(SuccessData(r.data ?? ""));
+        users = r.data ?? [];
+        emit(SuccessData(users));
       },
     );
   }
@@ -34,7 +33,7 @@ class HomeCubit extends Cubit<HomeState> {
     emit(LoadingData());
     bool check = await RemoteConfigService().checkOurAppForUpdate(context);
     if (!check) {
-      getTermsOfUse();
+      showUsers();
     }
   }
 }

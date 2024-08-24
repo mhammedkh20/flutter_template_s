@@ -6,10 +6,10 @@ class GeneralResponse<T> {
 
   GeneralResponse({this.status, this.code, this.message, this.data});
 
-  GeneralResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    code = json['code'];
-    message = json['message'];
-    data = json['data'];
+  GeneralResponse.fromJson(
+    dynamic json,
+    T? Function(dynamic json) fromJson,
+  ) {
+    data = fromJson(json);
   }
 }

@@ -1,11 +1,14 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:template_flutter_project/core/components/loading_widget.dart';
 import 'package:template_flutter_project/core/components/my_app_bar.dart';
+import 'package:template_flutter_project/core/components/my_contianer_shape.dart';
 import 'package:template_flutter_project/core/components/my_text.dart';
 import 'package:template_flutter_project/core/services/notification_service.dart';
 import 'package:template_flutter_project/core/utils/app_helpers.dart';
+import 'package:template_flutter_project/future/home/models/user_model.dart';
 import 'package:template_flutter_project/future/home/presentation/manager/home_cubit/home_cubit.dart';
 
 class MainScreen extends StatefulWidget {
@@ -62,10 +65,20 @@ class _MainScreenState extends State<MainScreen> {
               child: MyText(title: state.message),
             );
           }
-          return SingleChildScrollView(
-            child: HomeCubit.get(context).trems != null
-                ? MyText(title: HomeCubit.get(context).trems!.data ?? "")
-                : null,
+          List<UserModel> users = HomeCubit.get(context).users;
+          return ListView.builder(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
+            itemCount: users.length,
+            itemBuilder: (BuildContext context, int index) {
+              return MyContainerShape(
+                enableRadius: true,
+                borderRadius: 16,
+                marginBottom: 15,
+                paddingHorizontal: 15,
+                paddingVertical: 15,
+                child: MyText(title: users[index].username ?? ""),
+              );
+            },
           );
         },
       ),

@@ -8,19 +8,11 @@ class HomeInitial extends HomeState {}
 class LoadingData extends HomeState {}
 
 class SuccessData extends HomeState {
-  final String data;
-  SuccessData(this.data);
+  final List<UserModel> users;
+  SuccessData(this.users);
 }
 
-class FailureData extends HomeState implements Equatable {
+class FailureData extends HomeState {
   final String message;
   FailureData(this.message);
-
-  @override
-  // TODO: implement props
-  List<Object?> get props => [message];
-
-  @override
-  // TODO: implement stringify
-  bool? get stringify => false;
 }
