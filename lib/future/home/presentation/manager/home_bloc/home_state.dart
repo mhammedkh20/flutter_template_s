@@ -1,11 +1,8 @@
-part of 'home_cubit.dart';
+part of 'home_bloc.dart';
 
-@immutable
 abstract class HomeState {}
 
 class HomeInitial extends HomeState {}
-
-class LoadingData extends HomeState {}
 
 class SuccessData extends HomeState {
   final List<UserModel> users;
@@ -16,3 +13,7 @@ class FailureData extends HomeState {
   final String message;
   FailureData(this.message);
 }
+
+class LoadingData extends HomeState {}
+
+class RequestUpdateApp extends HomeState {}

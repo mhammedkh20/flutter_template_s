@@ -9,7 +9,7 @@ import 'package:template_flutter_project/core/components/my_text.dart';
 import 'package:template_flutter_project/core/services/notification_service.dart';
 import 'package:template_flutter_project/core/utils/app_helpers.dart';
 import 'package:template_flutter_project/future/home/models/user_model.dart';
-import 'package:template_flutter_project/future/home/presentation/manager/home_cubit/home_cubit.dart';
+import 'package:template_flutter_project/future/home/presentation/manager/home_bloc/home_bloc.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -21,7 +21,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
-    HomeCubit.get(context).initHomeCubit(context);
+    context.read<HomeBloc>().add(CheckUpdateAppEvent(context));
     NotificationService.init();
     NotificationService.requestIOSPermissions();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -32,9 +32,7 @@ class _MainScreenState extends State<MainScreen> {
             id: notification.hashCode,
             title: notification.title ?? "",
             body: notification.body ?? "",
-            urlImage: notification.android == null
-                ? null
-                : notification.android!.imageUrl,
+            urlImage: notification.android?.imageUrl,
           );
         }
       }
@@ -46,10 +44,8 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(
-        title: 'Tamplate Project',
-      ),
-      body: BlocConsumer<HomeCubit, HomeState>(
+      appBar: const MyAppBar(title: 'Tamplate Project'),
+      body: BlocConsumer<HomeBloc, HomeState>(
         listener: (context, state) {
           if (state is FailureData) {
             AppHelpers.showSnackBar(context,
@@ -65,7 +61,7 @@ class _MainScreenState extends State<MainScreen> {
               child: MyText(title: state.message),
             );
           }
-          List<UserModel> users = HomeCubit.get(context).users;
+          List<UserModel> users = context.read<HomeBloc>().users;
           return ListView.builder(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
             itemCount: users.length,

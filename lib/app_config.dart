@@ -7,7 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/src/bloc_provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:template_flutter_project/future/home/domin/home_repo.dart';
-import 'package:template_flutter_project/future/home/presentation/manager/home_cubit/home_cubit.dart';
+import 'package:template_flutter_project/future/home/presentation/manager/home_bloc/home_bloc.dart';
 import 'package:template_flutter_project/locator.dart';
 
 class AppConfig {
@@ -43,6 +43,6 @@ class AppConfig {
   }
 
   static List<SingleChildWidget> providers = [
-    BlocProvider(create: (_) => HomeCubit(locator<HomeRepo>())),
+    BlocProvider(create: (_) => HomeBloc(locator<HomeRepo>())),
   ];
 }

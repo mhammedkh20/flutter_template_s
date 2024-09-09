@@ -1,22 +1,22 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:template_flutter_project/core/services/remoteconfig_servoce.dart';
 import 'package:template_flutter_project/future/home/domin/home_repo.dart';
 import 'package:template_flutter_project/future/home/models/user_model.dart';
+
+part 'home_event.dart';
 part 'home_state.dart';
 
-class HomeCubit extends Cubit<HomeState> {
+class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final HomeRepo repo;
 
-  HomeCubit(this.repo) : super(HomeInitial());
-
-  static HomeCubit get(BuildContext context) {
-    return BlocProvider.of(context);
+  HomeBloc(this.repo) : super(HomeInitial()) {
+    on<GetUsersEvent>(_showUsers);
+    on<CheckUpdateAppEvent>(_checkUpdateApp);
   }
 
   List<UserModel> users = [];
-
-  Future showUsers() async {
+  Future _showUsers(GetUsersEvent event, emit) async {
     emit(LoadingData());
     (await repo.getUsers()).fold(
       (l) {
@@ -29,11 +29,12 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
-  Future initHomeCubit(BuildContext context) async {
+  Future _checkUpdateApp(CheckUpdateAppEvent event, emit) async {
     emit(LoadingData());
-    bool check = await RemoteConfigService().checkOurAppForUpdate(context);
+    bool check =
+        await RemoteConfigService().checkOurAppForUpdate(event.context);
     if (!check) {
-      showUsers();
+      add(GetUsersEvent());
     }
   }
 }

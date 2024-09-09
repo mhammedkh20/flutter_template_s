@@ -39,6 +39,7 @@ dependencies:
 
   # ? test
   mockito: ^5.4.4
+  bloc_test: ^9.1.7
 
   # ? platforms packages
   package_info_plus: ^8.0.2
